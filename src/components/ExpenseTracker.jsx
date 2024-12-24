@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getExpenses, saveExpense, clearExpenses } from "../utils/db"; // Import the new function
+import { getExpenses, saveExpense, clearExpenses } from "../utils/db";
 import "./ExpenseTracker.css";
 
 function ExpenseTracker() {
@@ -43,8 +43,8 @@ function ExpenseTracker() {
   const handleClearExpenses = async () => {
     try {
       await clearExpenses();
-      setExpenses();// Clear the expenses from the state as well
-      setBalance(0); // Reset the balance
+      setExpenses();
+      setBalance(0);
     } catch (error) {
       console.error("Error clearing expenses:", error);
     }
