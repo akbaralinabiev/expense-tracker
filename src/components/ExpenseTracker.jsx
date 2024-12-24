@@ -32,7 +32,7 @@ function ExpenseTracker() {
 
     try {
       await saveExpense(newExpense);
-      setExpenses((prev) => [...prev, newExpense]);
+      setExpenses((prev) => [newExpense, ...prev]); 
       setName("");
       setAmount("");
     } catch (error) {
@@ -43,12 +43,24 @@ function ExpenseTracker() {
   const handleClearExpenses = async () => {
     try {
       await clearExpenses();
-      setExpenses([]); // Clear the expenses from the state as well
+      setExpenses();// Clear the expenses from the state as well
       setBalance(0); // Reset the balance
     } catch (error) {
       console.error("Error clearing expenses:", error);
     }
   };
+
+  // Function to format date and time
+  const formatDate = (isoDate) => {
+    const date = new Date(isoDate);
+    const options = {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    };
+    return date.toLocaleString(undefined, options);
+  };
+
   return (
     <div className="expense-tracker_header">
       <div className="header">
@@ -78,8 +90,11 @@ function ExpenseTracker() {
         </div>
         {expenses.map((expense) => (
           <div className="expense-item" key={expense.id}>
-            <span>{expense.name}</span>
-            <span>${expense.amount}</span>
+            <div className="expense-info">
+              <div className="expense-name">{expense.name}</div>
+              <span className="expense-date">{formatDate(expense.date)}</span>
+            </div>
+            <div className="expense-price">${expense.amount}</div>
           </div>
         ))}
       </div>

@@ -19,6 +19,7 @@
      .expense-tracker_header {
           flex-direction: column;
           gap: 30px;
+          padding: 16px;
      }
 
      .header {
@@ -33,20 +34,45 @@
 @media (max-width: 540px) {
      .expense-tracker_header {
           flex-direction: column;
-          gap: 20px;
+          gap: 15px;
           padding: 12px;
+          justify-content: flex-start;
      }
 
      .header {
           max-width: 90%;
+          max-height: 40%;
      }
 
      .expenses {
           max-width: 90%;
+          height: 100%;
      }
 
      .header-title {
           font-size: 18px;
+     }
+
+     .clear-button {
+          position: absolute;
+          bottom: 15px;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          border-radius: 10px;
+          background-color: #FF6347;
+          color: white;
+          padding: 10px;
+          border: none;
+          cursor: pointer;
+          margin-top: 20px;
+          -webkit-transform: translate(-50%, -50%);
+          -moz-transform: translate(-50%, -50%);
+          -ms-transform: translate(-50%, -50%);
+          -o-transform: translate(-50%, -50%);
+          -webkit-border-radius: 10px;
+          -moz-border-radius: 10px;
+          -ms-border-radius: 10px;
+          -o-border-radius: 10px;
      }
 }
 
@@ -55,7 +81,7 @@
      flex-direction: column;
      justify-content: space-between;
      text-align: center;
-     padding: 0 20px 0 20px;
+     padding: 0 20px 20px 20px;
      background-color: white;
      border-radius: 30px;
      border: 1px solid #000000;
@@ -80,10 +106,20 @@
 .expenses .expense-item {
      display: flex;
      width: 100%;
-
      justify-content: space-between;
      padding: 10px 0;
      border-top: 1px solid #ddd;
+}
+
+.expense-name,
+.expense-price {
+     font-size: 16px;
+     font-weight: bold;
+}
+
+.expense-date {
+     color: #6e6e6e;
+     font-size: 14px;
 }
 
 .list-title {
@@ -103,7 +139,16 @@
      border: 1px solid #000000;
      background: #FBFBFE;
      box-shadow: 0px 1px 10px 0px rgba(54, 50, 255, 0.05);
+     overflow-y: auto;
+     /* Enable vertical scrolling when content overflows */
      scroll-snap-align: start;
+}
+
+.expenses::-webkit-scrollbar {
+     width: 0px;
+     /* Hide vertical scrollbar */
+     height: 0px;
+     /* Hide horizontal scrollbar */
 }
 
 .expense-form {
@@ -125,7 +170,6 @@
      background-color: black;
      color: white;
      cursor: pointer;
-     margin-bottom: 15px;
 }
 
 .clear-button {
