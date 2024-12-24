@@ -1,36 +1,30 @@
-// db.js for managing IndexedDB (local storage of expenses)
-const dbName = "expenseTrackerDB";
-const storeName = "expenses";
+import Dexie from "dexie";
 
-const openDB = () => {
-  return new Promise((resolve, reject) => {
-    const request = indexedDB.open(dbName, 1);
-    request.onerror = (event) => reject(event);
-    request.onsuccess = (event) => resolve(event.target.result);
-    request.onupgradeneeded = (event) => {
-      const db = event.target.result;
-      if (!db.objectStoreNames.contains(storeName)) {
-        db.createObjectStore(storeName, { keyPath: "id", autoIncrement: true });
-      }
-    };
-  });
+export const db = new Dexie("ExpenseDB");
+db.version(1).stores({
+  expenses: "++id, name, amount, date",
+});
+
+export const getExpenses = async () => {
+  return await db.expenses.toArray();
 };
 
-const saveExpense = async (expense) => {
-  const db = await openDB();
-  const transaction = db.transaction(storeName, "readwrite");
-  const store = transaction.objectStore(storeName);
-  store.add(expense);
+export const saveExpense = async (expense) => {
+  return await db.expenses.add(expense);
 };
 
-const getExpenses = async () => {
-  const db = await openDB();
-  const transaction = db.transaction(storeName, "readonly");
-  const store = transaction.objectStore(storeName);
-  const request = store.getAll();
-  return new Promise((resolve) => {
-    request.onsuccess = () => resolve(request.result);
-  });
+// utils/db.js (or wherever you handle the database)
+// utils/db.js
+export const clearExpenses = async () => {
+  try {
+    await Dexie.delete("ExpenseDB");  // Delete the entire database
+    // Recreate the database and store structure
+    db.version(1).stores({
+      expenses: "++id, name, amount, date",
+    });
+    console.log("Database cleared completely!");
+  } catch (error) {
+    console.error("Error clearing the database:", error);
+  }
 };
 
-export { saveExpense, getExpenses };

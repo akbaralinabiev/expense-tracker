@@ -1,0 +1,146 @@
+.expense-tracker_header {
+     display: flex;
+     flex-direction: row;
+     position: relative;
+     justify-content: space-evenly;
+     align-items: center;
+     font-family: 'Arial', sans-serif;
+     margin: 0 auto;
+     background-color: #f7f9fc;
+     box-sizing: border-box;
+     margin: 0;
+     padding: 0;
+     height: 100vh;
+     padding: 20px;
+
+}
+
+@media (max-width: 1090px) {
+     .expense-tracker_header {
+          flex-direction: column;
+          gap: 30px;
+     }
+
+     .header {
+          min-width: 90%;
+     }
+
+     .expenses {
+          min-width: 90%;
+     }
+}
+
+@media (max-width: 540px) {
+     .expense-tracker_header {
+          flex-direction: column;
+          gap: 20px;
+          padding: 12px;
+     }
+
+     .header {
+          max-width: 90%;
+     }
+
+     .expenses {
+          max-width: 90%;
+     }
+
+     .header-title {
+          font-size: 18px;
+     }
+}
+
+.header {
+     display: flex;
+     flex-direction: column;
+     justify-content: space-between;
+     text-align: center;
+     padding: 0 20px 0 20px;
+     background-color: white;
+     border-radius: 30px;
+     border: 1px solid #000000;
+     background: #FBFBFE;
+     box-shadow: 0px 1px 10px 0px rgba(54, 50, 255, 0.05);
+     height: 400px;
+     width: 400px;
+}
+
+.header h1 {
+     font-size: 30px;
+     color: #333;
+     margin-top: 20px;
+}
+
+.header p {
+     font-size: 34px;
+     font-weight: bold;
+     margin: 0;
+}
+
+.expenses .expense-item {
+     display: flex;
+     width: 100%;
+
+     justify-content: space-between;
+     padding: 10px 0;
+     border-top: 1px solid #ddd;
+}
+
+.list-title {
+     font-size: 20px;
+     font-weight: bold;
+     margin: none !;
+}
+
+.expenses {
+     display: flex;
+     height: 400px;
+     width: 400px;
+     flex-direction: column;
+     padding-left: 20px;
+     padding-right: 20px;
+     border-radius: 30px;
+     border: 1px solid #000000;
+     background: #FBFBFE;
+     box-shadow: 0px 1px 10px 0px rgba(54, 50, 255, 0.05);
+     scroll-snap-align: start;
+}
+
+.expense-form {
+     display: flex;
+     flex-direction: column;
+}
+
+.expense-form input {
+     margin: 10px 0;
+     padding: 12px;
+     border: 1px solid #ddd;
+     border-radius: 10px;
+}
+
+.expense-form button {
+     padding: 12px;
+     border: none;
+     border-radius: 10px;
+     background-color: black;
+     color: white;
+     cursor: pointer;
+     margin-bottom: 15px;
+}
+
+.clear-button {
+     position: absolute;
+     right: 30px;
+     bottom: 30px;
+     border-radius: 10px;
+     background-color: #FF6347;
+     color: white;
+     padding: 10px;
+     border: none;
+     cursor: pointer;
+     margin-top: 20px;
+}
+
+.clear-button:hover {
+     background-color: #ff4d35;
+}

@@ -1,16 +1,18 @@
+// index.js (PWA Integration)
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App";
-import "./index.css";
-import * as serviceWorkerRegistration from "./serviceWorker";
+import ExpenseTracker from "./components/ExpenseTracker";
 
-// Render the app
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker
+    .register("/serviceWorker.js")
+    .then(() => console.log("Service Worker Registered"))
+    .catch((err) => console.error("Service Worker Error:", err));
+}
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App />
+    <ExpenseTracker />
   </React.StrictMode>
 );
-
-// Register Service Worker for offline support
-serviceWorkerRegistration.register();
