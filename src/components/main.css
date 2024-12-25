@@ -34,7 +34,7 @@ body {
      }
 }
 
-@media (max-width: 540px) {
+@media (max-width: 620px) {
      .expense-tracker_header {
           flex-direction: column;
           gap: 15px;
@@ -75,6 +75,12 @@ body {
           -moz-border-radius: 10px;
           -ms-border-radius: 10px;
           -o-border-radius: 10px;
+     }
+
+     .settings-container {
+          height: 500px;
+          max-width: 86%;
+          padding: 20px;
      }
 }
 
@@ -318,8 +324,9 @@ body {
      background-color: #2e2e2e;
 }
 
-.settings-view{
-     marign: 0;
+.settings-view {
+     margin: 0;
+     padding: 90px 0;
 }
 
 .settings-container {
@@ -329,6 +336,7 @@ body {
      width: 500px;
      flex-direction: column;
      padding: 20px;
+     background: white;
      border-radius: 30px;
      border: 1px solid #000000;
      box-shadow: 0px 1px 10px 0px rgba(54, 50, 255, 0.05);
