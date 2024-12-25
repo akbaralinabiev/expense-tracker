@@ -6,6 +6,7 @@ import {
 }
 from "./LocationService";
 import ChartView from "./ChartView";
+import Settings from "./Settings";
 import "./main.css";
 
 function ExpenseTracker() {
@@ -151,12 +152,7 @@ function ExpenseTracker() {
         return <ChartView expenses={expenses} />;
 
       case "settings":
-        return (
-          <div className="settings-view">
-            <h2>Settings</h2>
-            <p>Feature coming soon...</p>
-          </div>
-        );
+        return <Settings expenses={expenses} />; 
 
       default:
         return null;

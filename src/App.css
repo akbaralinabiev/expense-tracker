@@ -1,6 +1,7 @@
 .app-container {
   overflow: hidden;
   width: 100%;
+  background-color: #F9F9FF;
 }
 
 .tab-header {

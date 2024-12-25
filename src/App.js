@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./App.css";
+import "./index.css";
 import AddExpense from "./components/AddExpense";
 import ChartView from "./components/ChartView";
 import Settings from "./components/Settings";
