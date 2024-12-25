@@ -88,6 +88,11 @@
      width: 400px;
 }
 
+.header-container{
+     display: flex;
+     flex-direction: row;
+}
+
 .header h1 {
      font-size: 30px;
      color: #333;
