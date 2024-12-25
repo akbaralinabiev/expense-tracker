@@ -43,7 +43,7 @@
 
      .expenses {
           max-width: 90%;
-          height: 100%;
+          min-height: 100%;
      }
 
      .header-title {
@@ -142,6 +142,10 @@
 
 .expenses h2 {
      font-size: 18px;
+}
+
+.expense-location{
+     text-align: right;
 }
 
 .expense-price-location-info {
