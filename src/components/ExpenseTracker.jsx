@@ -180,6 +180,16 @@ function ExpenseTracker() {
   }, []);
 
   useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => console.log("Location permission granted."),
+        (error) => console.warn("Location permission denied:", error)
+      );
+    }
+  }, []);
+
+
+  useEffect(() => {
     const total = expenses.reduce((acc, expense) => acc + expense.amount, 0);
     setBalance(total);
   }, [expenses]);
