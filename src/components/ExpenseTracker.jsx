@@ -19,26 +19,56 @@
 //   }, []);
 
 //   useEffect(() => {
+//     if (navigator.geolocation) {
+//       navigator.geolocation.getCurrentPosition(
+//         (position) => console.log("Location permission granted."),
+//         (error) => console.warn("Location permission denied:", error)
+//       );
+//     }
+//   }, []);
+
+
+//   useEffect(() => {
 //     const total = expenses.reduce((acc, expense) => acc + expense.amount, 0);
 //     setBalance(total);
 //   }, [expenses]);
 
 //   const handleAddExpense = async (e) => {
 //     e.preventDefault();
-//     const newExpense = {
-//       name,
-//       amount: parseFloat(amount),
-//       date: new Date().toISOString(),
-//     };
 
-//     try {
-//       await saveExpense(newExpense);
-//       setExpenses((prev) => [newExpense, ...prev]);
-//       setName("");
-//       setAmount("");
-//     } catch (error) {
-//       console.error("Error adding expense:", error);
-//     }
+//     navigator.geolocation.getCurrentPosition(
+//       async (position) => {
+//         const { latitude, longitude } = position.coords;
+//         const newExpense = {
+//           name,
+//           amount: parseFloat(amount),
+//           date: new Date().toISOString(),
+//           location: { latitude, longitude },
+//         };
+
+//         try {
+//           await saveExpense(newExpense);
+//           setExpenses((prev) => [newExpense, ...prev]);
+//           setName("");
+//           setAmount("");
+//         } catch (error) {
+//           console.error("Error adding expense:", error);
+//         }
+//       },
+//       (error) => {
+//         alert("Failed to get location. Expense added without location.");
+//         const newExpense = {
+//           name,
+//           amount: parseFloat(amount),
+//           date: new Date().toISOString(),
+//           location: null,
+//         };
+//         saveExpense(newExpense);
+//         setExpenses((prev) => [newExpense, ...prev]);
+//         setName("");
+//         setAmount("");
+//       }
+//     );
 //   };
 
 //   const handleClearExpenses = async () => {
@@ -60,7 +90,6 @@
 //     });
 //   };
 
-//   // Render based on active tab
 //   const renderView = () => {
 //     switch (activeTab) {
 //       case "expenses":
@@ -100,7 +129,19 @@
 //                       {formatDate(expense.date)}
 //                     </span>
 //                   </div>
-//                   <div className="expense-price">${expense.amount}</div>
+//                   <div className="expense-price-location-info">
+//                     <div className="expense-price">${expense.amount}</div>
+//                     {expense.location ? (
+//                       <div className="expense-location">
+//                         Location: {expense.location.latitude},{" "}
+//                         {expense.location.longitude}
+//                       </div>
+//                     ) : (
+//                       <div className="expense-location">
+//                         Location not available
+//                       </div>
+//                     )}
+//                   </div>
 //                 </div>
 //               ))}
 //             </div>
@@ -150,7 +191,6 @@
 //         </button>
 //       </div>
 
-//       {/* Render Current View */}
 //       {renderView()}
 //     </div>
 //   );
@@ -161,6 +201,11 @@
 
 import React, { useEffect, useState } from "react";
 import { getExpenses, saveExpense, clearExpenses } from "../utils/db";
+import {
+  getLocation,
+  getAddressFromCoordinates,
+}
+from "./LocationService"; // Import the LocationService functions
 import ChartView from "./ChartView";
 import "./main.css";
 
@@ -180,16 +225,6 @@ function ExpenseTracker() {
   }, []);
 
   useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => console.log("Location permission granted."),
-        (error) => console.warn("Location permission denied:", error)
-      );
-    }
-  }, []);
-
-
-  useEffect(() => {
     const total = expenses.reduce((acc, expense) => acc + expense.amount, 0);
     setBalance(total);
   }, [expenses]);
@@ -197,14 +232,21 @@ function ExpenseTracker() {
   const handleAddExpense = async (e) => {
     e.preventDefault();
 
-    navigator.geolocation.getCurrentPosition(
+    getLocation(
       async (position) => {
         const { latitude, longitude } = position.coords;
+
+        // Get the address based on the coordinates
+        const locationName = await getAddressFromCoordinates(
+          latitude,
+          longitude
+        );
+
         const newExpense = {
           name,
           amount: parseFloat(amount),
           date: new Date().toISOString(),
-          location: { latitude, longitude },
+          location: locationName, // Add the location name
         };
 
         try {
@@ -222,7 +264,7 @@ function ExpenseTracker() {
           name,
           amount: parseFloat(amount),
           date: new Date().toISOString(),
-          location: null,
+          location: "Unknown Location", // If geolocation fails, set default location
         };
         saveExpense(newExpense);
         setExpenses((prev) => [newExpense, ...prev]);
@@ -290,17 +332,12 @@ function ExpenseTracker() {
                       {formatDate(expense.date)}
                     </span>
                   </div>
-                  <div className="expense-price">${expense.amount}</div>
-                  {expense.location ? (
+                  <div className="expense-price-location-info">
+                    <div className="expense-price">${expense.amount}</div>
                     <div className="expense-location">
-                      Location: {expense.location.latitude},{" "}
-                      {expense.location.longitude}
+                      {expense.location || "Location not available"}
                     </div>
-                  ) : (
-                    <div className="expense-location">
-                      Location not available
-                    </div>
-                  )}
+                  </div>
                 </div>
               ))}
             </div>
