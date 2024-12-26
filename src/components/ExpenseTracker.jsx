@@ -1,25 +1,27 @@
 import React, { useEffect, useState } from "react";
-import { getExpenses, saveExpense } from "../utils/db";
-import { getLocation, getAddressFromCoordinates } from "./LocationService";
-import ChartView from "./ChartView";
-import Settings from "./Settings";
-import "./main.css";
+import { getExpenses, saveExpense } from "../utils/db"; // Utility functions for interacting with the database
+import { getLocation, getAddressFromCoordinates } from "./LocationService"; // Location-related services
+import ChartView from "./ChartView"; // Component for displaying expenses chart
+import Settings from "./Settings"; // Component for app settings
+import "./main.css"; // Styles for the main component
 import {
   requestNotificationPermission,
   showNotification,
-} from "../utils/NotificationService";
+} from "../utils/NotificationService"; // Notification utilities
 
 function ExpenseTracker() {
-  const [expenses, setExpenses] = useState([]);
-  const [balance, setBalance] = useState(0);
-  const [name, setName] = useState("");
-  const [amount, setAmount] = useState("");
-  const [activeTab, setActiveTab] = useState("expenses");
+  const [expenses, setExpenses] = useState([]); // State to store the list of expenses
+  const [balance, setBalance] = useState(0); // State to store the current balance
+  const [name, setName] = useState(""); // State to store the expense name
+  const [amount, setAmount] = useState(""); // State to store the expense amount
+  const [activeTab, setActiveTab] = useState("expenses"); // State to manage active tab (expenses, chart, settings)
 
+  // Request notification permissions on component mount
   useEffect(() => {
     requestNotificationPermission();
   }, []);
 
+  // Fetch expenses from the database on component mount
   useEffect(() => {
     const fetchExpenses = async () => {
       const allExpenses = await getExpenses();
@@ -28,18 +30,19 @@ function ExpenseTracker() {
     fetchExpenses();
   }, []);
 
+  // Recalculate the balance whenever the expenses list changes
   useEffect(() => {
     const total = expenses.reduce((acc, expense) => acc + expense.amount, 0);
     setBalance(total);
   }, [expenses]);
 
+  // Handle adding a new expense, including location and notification
   const handleAddExpense = async (e) => {
     e.preventDefault();
 
     getLocation(
       async (position) => {
         const { latitude, longitude } = position.coords;
-
         const locationName = await getAddressFromCoordinates(
           latitude,
           longitude
@@ -53,11 +56,11 @@ function ExpenseTracker() {
         };
 
         try {
-          await saveExpense(newExpense);
-          setExpenses((prev) => [newExpense, ...prev]);
-          setName("");
+          await saveExpense(newExpense); // Save the expense to the database
+          setExpenses((prev) => [newExpense, ...prev]); // Update the expenses state
+          setName(""); // Clear the input fields
           setAmount("");
-          showNotification(newExpense);
+          showNotification(newExpense); // Show a notification for the new expense
         } catch (error) {
           console.error("Error adding expense:", error);
         }
@@ -70,7 +73,7 @@ function ExpenseTracker() {
           date: new Date().toISOString(),
           location: "Unknown Location",
         };
-        saveExpense(newExpense);
+        saveExpense(newExpense); // Save the expense without location
         setExpenses((prev) => [newExpense, ...prev]);
         setName("");
         setAmount("");
@@ -79,6 +82,7 @@ function ExpenseTracker() {
     );
   };
 
+  // Format the date for displaying in a readable format
   const formatDate = (isoDate) => {
     const date = new Date(isoDate);
     return date.toLocaleDateString(undefined, {
@@ -88,15 +92,17 @@ function ExpenseTracker() {
     });
   };
 
+  // Render the appropriate view based on the active tab
   const renderView = () => {
     switch (activeTab) {
       case "expenses":
         return (
           <div className="expense-tracker_header">
+            {/* Header for adding a new expense */}
             <div className="header">
               <div className="header-container">
                 <h1 className="header-title">Add New Expense</h1>
-                <p>${balance.toFixed(2)}</p>
+                <p>${balance.toFixed(2)}</p> {/* Display the current balance */}
               </div>
               <form className="expense-form" onSubmit={handleAddExpense}>
                 <input
@@ -116,7 +122,7 @@ function ExpenseTracker() {
                 <button type="submit">Add Expense</button>
               </form>
             </div>
-
+            {/* Display the list of expenses */}
             <div className="expenses">
               <h2>Expenses</h2>
               {expenses.map((expense) => (
@@ -136,12 +142,13 @@ function ExpenseTracker() {
                 </div>
               ))}
             </div>
-            <div className="notification-container"></div>
+            <div className="notification-container"></div>{" "}
+            {/* Placeholder for notifications */}
           </div>
         );
 
       case "chart":
-        return <ChartView expenses={expenses} />;
+        return <ChartView expenses={expenses} />; // Render chart view
 
       case "settings":
         return (
@@ -150,8 +157,7 @@ function ExpenseTracker() {
             setExpenses={setExpenses}
             setBalance={setBalance}
           />
-        );
-
+        ); // Render settings view
 
       default:
         return null;
@@ -160,6 +166,7 @@ function ExpenseTracker() {
 
   return (
     <div className="expense-tracker">
+      {/* Navigation tabs to switch between views */}
       <div className="tab-nav">
         <button
           className={activeTab === "expenses" ? "active" : ""}
@@ -180,8 +187,7 @@ function ExpenseTracker() {
           Settings
         </button>
       </div>
-
-      {renderView()}
+      {renderView()} {/* Render the active view */}
     </div>
   );
 }
