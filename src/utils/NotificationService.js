@@ -37,6 +37,7 @@ export const showNotification = (expense) => {
 
   // Append the notification to the notification container
   const notificationContainer = document.querySelector(".notification-container");
+  notificationSound.play();
   if (notificationContainer) {
     notificationContainer.appendChild(notification);
 

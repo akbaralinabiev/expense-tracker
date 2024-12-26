@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { getExpenses, saveExpense, clearExpenses } from "../utils/db";
-import {
-  getLocation,
-  getAddressFromCoordinates,
-}
-from "./LocationService";
+import { getExpenses, saveExpense } from "../utils/db";
+import { getLocation, getAddressFromCoordinates } from "./LocationService";
 import ChartView from "./ChartView";
 import Settings from "./Settings";
 import "./main.css";
@@ -12,8 +8,6 @@ import {
   requestNotificationPermission,
   showNotification,
 } from "../utils/NotificationService";
-
-
 
 function ExpenseTracker() {
   const [expenses, setExpenses] = useState([]);
@@ -46,7 +40,6 @@ function ExpenseTracker() {
       async (position) => {
         const { latitude, longitude } = position.coords;
 
-        // Get the address based on the coordinates
         const locationName = await getAddressFromCoordinates(
           latitude,
           longitude
@@ -56,7 +49,7 @@ function ExpenseTracker() {
           name,
           amount: parseFloat(amount),
           date: new Date().toISOString(),
-          location: locationName, // Add the location name
+          location: locationName,
         };
 
         try {
@@ -64,7 +57,6 @@ function ExpenseTracker() {
           setExpenses((prev) => [newExpense, ...prev]);
           setName("");
           setAmount("");
-          console.log("Showing notification for expense:", newExpense);
           showNotification(newExpense);
         } catch (error) {
           console.error("Error adding expense:", error);
@@ -76,29 +68,15 @@ function ExpenseTracker() {
           name,
           amount: parseFloat(amount),
           date: new Date().toISOString(),
-          location: "Unknown Location", // If geolocation fails, set default location
+          location: "Unknown Location",
         };
         saveExpense(newExpense);
         setExpenses((prev) => [newExpense, ...prev]);
         setName("");
         setAmount("");
-        console.log(
-          "Showing notification for expense (with no location):",
-          newExpense
-        );
         showNotification(newExpense);
       }
     );
-  };
-
-  const handleClearExpenses = async () => {
-    try {
-      await clearExpenses();
-      setExpenses([]);
-      setBalance(0);
-    } catch (error) {
-      console.error("Error clearing expenses:", error);
-    }
   };
 
   const formatDate = (isoDate) => {
@@ -159,9 +137,6 @@ function ExpenseTracker() {
               ))}
             </div>
             <div className="notification-container"></div>
-            <button onClick={handleClearExpenses} className="clear-button">
-              Clear Expenses
-            </button>
           </div>
         );
 
@@ -169,7 +144,7 @@ function ExpenseTracker() {
         return <ChartView expenses={expenses} />;
 
       case "settings":
-        return <Settings expenses={expenses} />; 
+        return <Settings setExpenses={setExpenses} setBalance={setBalance} />;
 
       default:
         return null;

@@ -55,28 +55,6 @@ body {
           font-size: 18px;
      }
 
-     .clear-button {
-          position: absolute;
-          bottom: 10px;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          border-radius: 10px;
-          background-color: #FF6347;
-          color: white;
-          padding: 10px;
-          border: none;
-          cursor: pointer;
-          margin-top: 20px;
-          -webkit-transform: translate(-50%, -50%);
-          -moz-transform: translate(-50%, -50%);
-          -ms-transform: translate(-50%, -50%);
-          -o-transform: translate(-50%, -50%);
-          -webkit-border-radius: 10px;
-          -moz-border-radius: 10px;
-          -ms-border-radius: 10px;
-          -o-border-radius: 10px;
-     }
-
      .settings-container {
           height: 500px;
           max-width: 86%;
@@ -209,16 +187,19 @@ body {
 }
 
 .clear-button {
-     position: absolute;
-     right: 30px;
-     bottom: 30px;
-     border-radius: 10px;
-     background-color: #FF6347;
+     font-family: 'Arial', sans-serif;
+     max-width: 160px;
+     padding: 10px 16px;
+     background-color: #d61d1d;
      color: white;
-     padding: 10px;
      border: none;
+     border-radius: 10px;
      cursor: pointer;
-     margin-top: 20px;
+     font-size: 16px;
+     -webkit-border-radius: 10px;
+     -moz-border-radius: 10px;
+     -ms-border-radius: 10px;
+     -o-border-radius: 10px;
 }
 
 .clear-button:hover {
@@ -344,6 +325,7 @@ body {
 
 .settings-container {
      display: flex;
+     flex-direction: column;
      margin: 0;
      height: auto;
      width: 500px;

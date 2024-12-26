@@ -1,5 +1,3 @@
-// LocationService.js
-
 // Function to get the user's current geolocation
 export const getLocation = (onSuccess, onError) => {
   if (navigator.geolocation) {
