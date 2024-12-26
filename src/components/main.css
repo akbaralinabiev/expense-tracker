@@ -326,13 +326,14 @@ body {
 
 .settings-view {
      margin: 0;
-     padding: 90px 0;
+     padding: 90px 0 0 0;
+     height: 80vh;
 }
 
 .settings-container {
      display: flex;
      margin: 0;
-     height: 500px;
+     height: auto;
      width: 500px;
      flex-direction: column;
      padding: 20px;
@@ -345,4 +346,44 @@ body {
 .export-button-field {
      padding-bottom: 20px;
      border-bottom: 1px solid #acacac;
+}
+
+.notification-container {
+     position: fixed;
+     top: 20px;
+     right: 20px;
+     z-index: 9999;
+     display: flex;
+     flex-direction: column;
+     gap: 10px;
+}
+
+.notification {
+     background-color: #000;
+     color: white;
+     padding: 15px 20px;
+     border-radius: 15px;
+     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+     font-size: 14px;
+     opacity: 0;
+     transform: translateX(100%);
+     animation: slide-in 0.5s forwards, fade-out 4s forwards 3s;
+     -webkit-border-radius: 15px;
+     -moz-border-radius: 15px;
+     -ms-border-radius: 15px;
+     -o-border-radius: 15px;
+}
+
+@keyframes slide-in {
+     to {
+          opacity: 1;
+          transform: translateX(0);
+     }
+}
+
+@keyframes fade-out {
+     to {
+          opacity: 0;
+          transform: translateX(100%);
+     }
 }

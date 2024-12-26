@@ -8,6 +8,10 @@ from "./LocationService";
 import ChartView from "./ChartView";
 import Settings from "./Settings";
 import "./main.css";
+import {
+  requestNotificationPermission,
+  showNotification,
+} from "../utils/NotificationService";
 
 function ExpenseTracker() {
   const [expenses, setExpenses] = useState([]);
@@ -15,6 +19,10 @@ function ExpenseTracker() {
   const [name, setName] = useState("");
   const [amount, setAmount] = useState("");
   const [activeTab, setActiveTab] = useState("expenses");
+
+  useEffect(() => {
+    requestNotificationPermission();
+  }, []);
 
   useEffect(() => {
     const fetchExpenses = async () => {
@@ -54,6 +62,8 @@ function ExpenseTracker() {
           setExpenses((prev) => [newExpense, ...prev]);
           setName("");
           setAmount("");
+          console.log("Showing notification for expense:", newExpense);
+          showNotification(newExpense);
         } catch (error) {
           console.error("Error adding expense:", error);
         }
@@ -70,6 +80,11 @@ function ExpenseTracker() {
         setExpenses((prev) => [newExpense, ...prev]);
         setName("");
         setAmount("");
+        console.log(
+          "Showing notification for expense (with no location):",
+          newExpense
+        );
+        showNotification(newExpense);
       }
     );
   };
@@ -141,7 +156,7 @@ function ExpenseTracker() {
                 </div>
               ))}
             </div>
-
+            <div className="notification-container"></div>
             <button onClick={handleClearExpenses} className="clear-button">
               Clear Expenses
             </button>
