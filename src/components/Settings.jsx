@@ -4,27 +4,25 @@ import { clearExpenses } from "../utils/db";
 
 // Function to export the expenses data as Excel
 const exportToExcel = (expenses) => {
-  // Convert the expenses data into a format that Excel can understand
-  const worksheet = XLSX.utils.json_to_sheet(expenses);
+  console.log("Expenses:", expenses); // Check what the expenses array contains
+  if (!Array.isArray(expenses)) {
+    console.error("Invalid expenses data");
+    return;
+  }
 
-  // Set column widths for better visibility (adjust the width as needed)
-  const columnWidths = [
-    { wpx: 100 }, // (Expense Name)
-    { wpx: 70 }, // (Amount)
-    { wpx: 300 }, // (Location or Address)
-    { wpx: 130 }, // (Date)
-    { wpx: 130 }, // (Time)
-  ];
-
-  // Apply column widths to the worksheet
-  worksheet["!cols"] = columnWidths;
-
+  const worksheet = XLSX.utils.json_to_sheet(
+    expenses.map(({ name, amount, date, location }) => ({
+      Name: name,
+      Amount: `$${amount.toFixed(2)}`,
+      Date: new Date(date).toLocaleDateString(),
+      Location: location || "Unknown",
+    }))
+  );
   const workbook = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(workbook, worksheet, "Expenses");
-
-  // Generate a downloadable Excel file
   XLSX.writeFile(workbook, "expenses.xlsx");
 };
+
 
 const Settings = ({ expenses, setExpenses, setBalance }) => {
   // Function to handle clearing expenses with sound
@@ -49,7 +47,7 @@ const Settings = ({ expenses, setExpenses, setBalance }) => {
         <div className="export-button-field">
           <h3>Export Expenses to Excel</h3>
           <button
-            onClick={() => exportToExcel(expenses)}
+            onClick={() => exportToExcel(expenses)} // Directly call the exportToExcel function
             className="export-button"
           >
             Export to Excel
@@ -67,5 +65,3 @@ const Settings = ({ expenses, setExpenses, setBalance }) => {
 };
 
 export default Settings;
-
-

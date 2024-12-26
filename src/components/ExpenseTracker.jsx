@@ -144,7 +144,14 @@ function ExpenseTracker() {
         return <ChartView expenses={expenses} />;
 
       case "settings":
-        return <Settings setExpenses={setExpenses} setBalance={setBalance} />;
+        return (
+          <Settings
+            expenses={expenses}
+            setExpenses={setExpenses}
+            setBalance={setBalance}
+          />
+        );
+
 
       default:
         return null;
