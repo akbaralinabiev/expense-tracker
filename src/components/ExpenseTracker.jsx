@@ -13,6 +13,8 @@ import {
   showNotification,
 } from "../utils/NotificationService";
 
+
+
 function ExpenseTracker() {
   const [expenses, setExpenses] = useState([]);
   const [balance, setBalance] = useState(0);

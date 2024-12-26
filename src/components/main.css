@@ -82,6 +82,18 @@ body {
           max-width: 86%;
           padding: 20px;
      }
+
+     .notification-container {
+          top: 16px;
+          right: 12px;
+     }
+
+     .notification {
+          padding: 8px 16px;
+          border-radius: 15px;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+          font-size: 12px;
+     }
 }
 
 .header {
