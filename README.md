@@ -6,6 +6,8 @@ This **Expense Tracker** app helps users track their daily expenses, view them o
 
 
 ---
+
+## Screenshots
 - **Expenses View**
 ![alt text](image.png)
 
@@ -14,7 +16,6 @@ This **Expense Tracker** app helps users track their daily expenses, view them o
 
 - **Settings View**
 ![alt text](image-2.png)
-
 
 ---
 
@@ -30,15 +31,6 @@ This **Expense Tracker** app helps users track their daily expenses, view them o
   
 ---
 
-## Screenshots
-
-![Expense Chart](./public/screenshot1.png)
-*Expense visualization through a bar chart.*
-
-![Settings View](./public/screenshot2.png)
-*Settings screen with options to clear data or export to Excel.*
-
----
 
 ## Technologies Used
 
