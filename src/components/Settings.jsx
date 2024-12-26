@@ -13,6 +13,7 @@ const exportToExcel = (expenses) => {
     { wpx: 70 }, // (Amount)
     { wpx: 300 }, // (Location or Address)
     { wpx: 130 }, // (Date)
+    { wpx: 130 }, // (Time)
   ];
 
   // Apply column widths to the worksheet
