@@ -11,7 +11,6 @@ const exportToExcel = (expenses) => {
     return;
   }
 
-  // Convert expenses data to a worksheet format, formatting each entry
   const worksheet = XLSX.utils.json_to_sheet(
     expenses.map(({ name, amount, date, location }) => ({
       Name: name,

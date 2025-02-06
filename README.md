@@ -17,7 +17,7 @@ This **Expense Tracker** app helps users track their daily expenses, view them o
 - **Settings View**
 ![alt text](image-2.png)
 
----
+--- 
 
 ## Features
 
@@ -52,7 +52,7 @@ To run the app locally, follow these steps:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-github-username-nigga/expense-tracker.git
+   git clone git@github.com:akbaralinabiev/expense-tracker.git
 
 2. Navigate to the project directory:
 

@@ -16,7 +16,6 @@ export const getAddressFromCoordinates = async (latitude, longitude) => {
     );
     const data = await response.json();
 
-    // Check if we got results, and return the best match
     if (data.results && data.results.length > 0) {
       const address = data.results[0].formatted; // The full address
       return address; // You can also refine this to only return the city or other details

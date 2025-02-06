@@ -15,7 +15,6 @@ self.addEventListener("install", (event) => {
   );
 });
 
-// Listen for the "fetch" event to serve cached content
 self.addEventListener("fetch", (event) => {
   event.respondWith(
     // Try to serve the requested resource from the cache first

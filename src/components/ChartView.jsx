@@ -9,7 +9,6 @@ import {
   Legend,
 } from "chart.js";
 
-// Register chart elements with ChartJS
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 export default function ChartView({ expenses }) {
@@ -18,29 +17,25 @@ export default function ChartView({ expenses }) {
     return date.getDate(); // Get the day of the month (1-31)
   };
 
-  // Group expenses by day of the month and calculate the total for each day
   const data = expenses.reduce((acc, expense) => {
     const date = new Date(expense.date);
-    const dayOfMonth = getDayOfMonth(date); // Get the day of the month
+    const dayOfMonth = getDayOfMonth(date); 
 
-    // Create a key for the day (e.g., "1", "2", "3", etc.)
-    acc[dayOfMonth] = (acc[dayOfMonth] || 0) + expense.amount; // Accumulate the expense for the same day
+    acc[dayOfMonth] = (acc[dayOfMonth] || 0) + expense.amount; 
     return acc;
   }, {});
 
-  // Generate labels for the 30 or 31 days of the month
-  const daysOfMonth = Array.from({ length: 31 }, (_, index) => index + 1); // Create an array with days of the month
-  const chartLabels = daysOfMonth.map((day) => `Day ${day}`); // Label each day
+  const daysOfMonth = Array.from({ length: 31 }, (_, index) => index + 1);
+  const chartLabels = daysOfMonth.map((day) => `Day ${day}`);
 
-  // Create chart data
   const chartData = {
-    labels: chartLabels, // Set the chart labels (days of the month)
+    labels: chartLabels,
     datasets: [
       {
-        label: "Daily Expenses", // Label for the dataset
-        data: daysOfMonth.map((day) => data[day] || 0), // Set value 0 for days with no expenses
-        backgroundColor: "#4CAF50", // Set the color for the chart bars
-        borderRadius: 5, // Rounded corners for the bars
+        label: "Daily Expenses", 
+        data: daysOfMonth.map((day) => data[day] || 0), 
+        backgroundColor: "#4CAF50",
+        borderRadius: 5, 
       },
     ],
   };

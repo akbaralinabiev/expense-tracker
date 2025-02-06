@@ -16,7 +16,7 @@ function ExpenseTracker() {
   const [amount, setAmount] = useState(""); // State to store the expense amount
   const [activeTab, setActiveTab] = useState("expenses"); // State to manage active tab (expenses, chart, settings)
 
-  // Request notification permissions on component mount
+
   useEffect(() => {
     requestNotificationPermission();
   }, []);
